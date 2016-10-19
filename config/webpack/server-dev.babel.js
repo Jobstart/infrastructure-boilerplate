@@ -1,0 +1,49 @@
+import sourceMapSupport from 'source-map-support';
+import webpack from 'webpack';
+
+import base from './server.babel';
+import banner from './banner';
+
+import * as envr from '../environment';
+
+sourceMapSupport.install({
+  environment: 'node',
+  hookRequire: true
+});
+
+const globals = {
+  ...Object.keys(envr).reduce((globals, key) => ({
+    ...globals,
+    [`__${key.toUpperCase()}__`]: envr[key]
+  })),
+  __CLIENT__: false,
+  __SERVER__: true,
+  __PRODUCTION__: false,
+  __DEV__: true,
+  'process.env': {
+    NODE_ENV: 'development'
+  }
+};
+
+const config = {
+  ...base,
+  cache: true,
+  debug: true,
+  entry: [
+    'webpack/hot/poll?1000',
+    ...base.entry
+  ],
+  output: {
+    ...base.output,
+    publicPath: `http://${envr.HOSTNAME}:${envr.WEBPACK_PORT}`
+  },
+  plugins: [
+    new webpack.DefinePlugin(globals),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+    new webpack.BannerPlugin(banner, { raw: true, entryOnly: false })
+  ]
+};
+
+export default config;
+module.exports = config; //needed for webpack (uses commonjs require)
