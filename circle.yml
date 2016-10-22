@@ -3,17 +3,25 @@ machine:
     version: 4.4.2
   services:
     - docker
+
 dependencies:
   override:
     - make dependencies
+
 test:
   override:
     - make lint
     - make clean
     - make
+    - make package
+    - make containers-up
+    - make seed
     - make test
+    - make containers-down
+    - make containers-rm
+
 deployment:
   production:
     branch: master
     commands:
-      - ./bin/deploy.sh
+      - make deploy

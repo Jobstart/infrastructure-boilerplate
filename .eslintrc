@@ -23,5 +23,14 @@
   "plugins": [
     "babel",
     "react"
-  ]
+  ],
+  "globals": {
+    "__HOSTNAME__": true,
+    "__WEBPACK_PORT__": true,
+    "__SERVER_PORT__": true,
+    "__CLIENT__": true,
+    "__SERVER__": true,
+    "__PRODUCTION__": true,
+    "__DEV__": true
+  }
 }

@@ -1,4 +1,2 @@
 --compilers js:babel-register
 --recursive
---require ./test/setup.js
-test/unit

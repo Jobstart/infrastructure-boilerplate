@@ -1,0 +1,16 @@
+mutation example($user: UpdateUserInput!){
+  user: updateUser(user: $user) {
+  	_id
+    name
+    email
+    time_updated
+  }
+}
+
+# QUERY PARAMS
+# {
+#   "user": {
+#   	"_id": "580b14d41e276e5c43570430",
+#     "name": "Andrew"
+#   }
+# }

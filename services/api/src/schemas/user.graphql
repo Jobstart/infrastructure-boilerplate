@@ -1,0 +1,48 @@
+# The User type is used to model a User object
+type User {
+  # The primary key for the user object (required)
+  _id: ObjectId!
+  # The user's name
+  name: String
+  # The user's email address
+  email: Email
+  # Time that the user was created
+  time_created: Date
+  # Time that the user was last updated
+  time_updated: Date
+  # Time that the user was destroyed
+  time_destroyed: Date
+  # Whether or not the user has been destroyed
+  destroyed: Boolean
+  # Token presented after signup or login
+  token: String
+}
+
+# The UserInput type is used to create or modify a User object.
+input CreateUserInput {
+  # The new user's name
+  name: String
+  # The new user's email
+  email: Email
+}
+
+input UpdateUserInput {
+  # ID [ObjectId] of User to update
+  _id: ObjectId
+  # The user's new name
+  name: String
+  # The user's new email
+  email: Email
+}
+
+# The UserQuery type is used to find a User object.
+input UserQuery {
+  # The _id [ObjectId] property of a User object
+  _id: ObjectId!
+}
+
+# The UsersQuery type is used to find a list of User objects
+input UsersQuery {
+  # A list of _id [ObjectId] properties of list of User objects
+  _ids: [ObjectId]!
+}

@@ -1,0 +1,12 @@
+type Query {
+  # Retrieve a set of User objects by IDs
+  getUsersByID (
+    # A UserQuery object
+    query: UsersQuery!
+  ): [User]
+  # Retrieve a User object by ID
+  getUserByID (
+    # A UserQueries object
+    query: UserQuery!
+  ): User
+}

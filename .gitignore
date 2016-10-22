@@ -1,5 +1,8 @@
 .DS_Store
 node_modules
+services/*/node_modules
+services/*/npm-debug.log
+services/*/npm-shrinkwrap.json
+services/*/dist
+reports
 npm-debug.log
-npm-shrinkwrap.json
-dist

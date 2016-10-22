@@ -1,0 +1,4 @@
+scalar Date
+scalar Null
+scalar ObjectId
+scalar Email

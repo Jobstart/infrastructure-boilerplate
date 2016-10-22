@@ -1,0 +1,7 @@
+type Mutation {
+  # Mutates or creates a User object given a UserInput object
+  updateUser (
+    # UserInput to update a User {_id: String!, name: String, email: Email}
+    user: UpdateUserInput!
+  ): User
+}
