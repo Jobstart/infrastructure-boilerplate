@@ -1,4 +1,4 @@
-import Cache from 'lib/cache';
+import Cache from 'adapters/base/cache';
 
 export default class MongooseCache extends Cache {
   constructor (model) {

@@ -8,7 +8,8 @@ let handled = false;
 
 const connection = redis.createClient({
   url: `redis://${__REDIS_HOST__}:${__REDIS_PORT__}`,
-  prefix: 'api'
+  prefix: 'api',
+  enable_offline_queue: false
 });
 
 export default connection;

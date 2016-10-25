@@ -1,7 +1,19 @@
 type Mutation {
   # Mutates or creates a User object given a UserInput object
   updateUser (
-    # UserInput to update a User {_id: String!, name: String, email: Email}
+    # UpdateUserInput to update a User {_id: String!, name: String, email: Email}
     user: UpdateUserInput!
+  ): User
+
+  # Creates a new User object via signup
+  signupUser (
+    # SignupUserInput to create a user via Signup {name: String!, email: Email!, password: String!}
+    user: SignupUserInput!
+  ): User
+
+  # Logs in an Existing user object
+  loginUser (
+    # LoginUserInput to log in a user via login {email: Email!, password: String!}
+    user: LoginUserInput!
   ): User
 }

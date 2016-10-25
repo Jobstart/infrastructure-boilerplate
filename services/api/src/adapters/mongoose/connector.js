@@ -14,7 +14,7 @@ export default class MongooseConnector {
   }
   async create (data = {}) {
     const instance = await this.model.create(data);
-    this.loader.prime(instance._id.toString(), instance);
+    await this.loader.prime(instance);
     return instance;
   }
   async updateByID (_id, data) {
@@ -28,7 +28,7 @@ export default class MongooseConnector {
     }, {
       new: true
     });
-    this.loader.replace(instance);
+    await this.loader.replace(instance);
     return instance;
   }
   async destroyByID (_id) {
@@ -42,7 +42,7 @@ export default class MongooseConnector {
     }, {
       new: true
     });
-    this.loader.clear(instance);
+    await this.loader.clear(instance);
     return instance;
   }
 }

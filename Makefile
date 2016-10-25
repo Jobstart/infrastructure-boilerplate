@@ -50,10 +50,10 @@ configure: .FORCE
 		"direnv allow"
 
 dependencies: .FORCE
+	npm install
 	concurrently \
 		"make -C services/frontend dependencies" \
-		"make -C services/api dependencies" \
-		"npm install"
+		"make -C services/api dependencies"
 
 containers-up: .FORCE
 	docker-compose up -d

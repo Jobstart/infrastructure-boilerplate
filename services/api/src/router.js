@@ -3,7 +3,7 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import { Z_BEST_COMPRESSION } from 'zlib';
-import { graphiqlExpress } from 'apollo-server';
+import { graphiqlExpress } from 'graphql-server-express';
 
 import { authMiddleware, gqlMiddleware } from 'middleware';
 import { logger } from 'io'
@@ -19,7 +19,7 @@ if (__PRODUCTION__) {
 router.use((req, res, next) => {
   logger.log('incoming request', req.url);
   next();
-})
+});
 
 router.use('/graphql',
   cookieParser(),
@@ -27,6 +27,14 @@ router.use('/graphql',
   bodyParser.json(),
   gqlMiddleware
 );
+
+router.use((err, req, res, next) => {
+  logger.trace(err);
+  return res.status(500).send({
+    error: 'unknown',
+    message: 'An unknown error has occured'
+  });
+});
 
 if (__DEV__) {
   logger.log('GraphiQL UI enabled');

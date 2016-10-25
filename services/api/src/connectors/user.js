@@ -9,8 +9,17 @@ const User = new MongooseModel('User', {
 .construct();
 
 class UserConnector extends MongooseConnector {
-  constructor (reqUser) {
-    super(User, reqUser);
+  constructor () {
+    super(User, null);
+  }
+  async getByEmail (email) {
+    const user = await this.model.findOne({
+      email
+    });
+    if (user) {
+      await this.loader.prime(user);
+    }
+    return user;
   }
   async signup ({ name, email, password }) {
     const hashed_password = await makeSaltedHash(password);
@@ -49,8 +58,7 @@ class UserConnector extends MongooseConnector {
     return {
       user,
       token
-    }
-
+    };
   }
 }
 

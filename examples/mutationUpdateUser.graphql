@@ -1,4 +1,4 @@
-mutation example($user: UpdateUserInput!){
+mutation updateUser($user: UpdateUserInput!){
   user: updateUser(user: $user) {
   	_id
     name

@@ -1,4 +1,4 @@
-import { apolloExpress } from 'apollo-server';
+import { graphqlExpress } from 'graphql-server-express';
 import { makeExecutableSchema } from 'graphql-tools';
 
 import { logger } from 'io';
@@ -29,7 +29,7 @@ const getContext = ({ user }) => ({
   connectors: getConnectors(user)
 });
 
-const middleware = apolloExpress(req => ({
+const middleware = graphqlExpress(req => ({
   schema,
   context: getContext(req)
 }));

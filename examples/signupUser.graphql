@@ -1,0 +1,18 @@
+mutation signupUser($user: SignupUserInput!){
+  user: signupUser(user: $user) {
+  	_id
+    name
+    email
+    time_updated,
+    token
+  }
+}
+
+# QUERY PARAMS
+# {
+#   "user": {
+#   	"email": "rhyneandrew@gmail.com",
+#     "password": "Dupont8*6^",
+#     "name": "Andrew"
+#   }
+# }

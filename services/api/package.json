@@ -28,7 +28,6 @@
     "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
-    "apollo-server": "^0.3.2",
     "bcrypt": "^0.8.7",
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
@@ -37,6 +36,7 @@
     "deepmerge": "^1.2.0",
     "express": "^4.14.0",
     "graphql": "^0.7.2",
+    "graphql-server-express": "^0.4.3",
     "graphql-tools": "^0.7.2",
     "hiredis": "^0.5.0",
     "jsonwebtoken": "^7.1.9",

@@ -10,10 +10,10 @@ export const makeSaltedHash = (input) => new Promise((resolve, reject) => (
 
 export const compareSaltedHash = (input, hash) => new Promise((resolve, reject) => (
   bcrypt.compare(input, hash, (err, res) => err ? reject(err) : res ? resolve(true) : resolve(false))
-))
+));
 
 export const objectToToken = (obj = {}) => new Promise((resolve, reject) => (
-  jwt.sign(obj, __JWT_SECRET__, (err, token) => err ? reject(err) : resolve(token))
+  jwt.sign(obj, __JWT_SECRET__, {}, (err, token) => err ? reject(err) : resolve(token))
 ));
 
 export const tokenToObject = (token) => new Promise((resolve, reject) => (

@@ -18,14 +18,25 @@ type User {
   token: String
 }
 
-# The UserInput type is used to create or modify a User object.
-input CreateUserInput {
+# The SignupUserInput type is used to create a User object via signup.
+input SignupUserInput {
   # The new user's name
   name: String
   # The new user's email
   email: Email
+  # The new user's password
+  password: String
 }
 
+# The LoginUserInput type is used to login an existing User object.
+input LoginUserInput {
+  # The user's email
+  email: Email
+  # THe user's password
+  password: String
+}
+
+# The UpdateUserINput type is used to modify a User object
 input UpdateUserInput {
   # ID [ObjectId] of User to update
   _id: ObjectId
