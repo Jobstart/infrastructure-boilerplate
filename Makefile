@@ -35,10 +35,10 @@ osx-syspackages: .FORCE
 	brew link --overwrite direnv
 
 linux-syspackages: .FORCE
-	apt-key adv --keyserver pgp.mit.edu --recv D101F7899D41F3C3
-	echo "deb http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-	apt-get -y update
-	apt-get install yarn direnv
+	sudo apt-key adv --keyserver pgp.mit.edu --recv D101F7899D41F3C3
+	echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+	sudo apt-get -y update
+	sudo apt-get install yarn direnv
 	sudo pip install docker-cloud
 
 environment: .FORCE
