@@ -3,6 +3,26 @@ import logger from 'io/logger';
 
 let hasInitialCleared = false;
 
+let errorState = false;
+let purgeQueue = [];
+
+redis.on('error', () => {
+  errorState = true;
+});
+
+redis.on('ready', async () => {
+  if (errorState) {
+    while (this._purgeQueue.length) {
+      const key = purgeQueue.pop();
+      try {
+        await redis.delAsync(key);
+      } catch (e) {
+        purgeQueue.push(key);
+      }
+    }
+  }
+});
+
 export default class Cache {
   constructor (model, key = '_id', ttl = 3600) {
     this._name = model.modelName.toLowerCase();
@@ -10,23 +30,6 @@ export default class Cache {
     this._ttl = __DEV__ ? ttl : 30;
     this._purgeQueue = [];
     this._errorState = false;
-
-    redis.on('error', () => {
-      this._errorState = true;
-    });
-
-    redis.on('ready', async () => {
-      if (this._errorState) {
-        while (this._purgeQueue.length) {
-          const key = this._purgeQueue.pop();
-          try {
-            await redis.delAsync(this._keyStr(key));
-          } catch (e) {
-            this._purgeQueue.push(key);
-          }
-        }
-      }
-    });
   }
   _keyStr (key) {
     return `${this._name}:${key.toString()}`;
@@ -56,7 +59,7 @@ export default class Cache {
       .map((instance) => instance ? this.deserialize(instance) : null);
     } catch (err) {
       logger.trace('redis error', err);
-      this._purgeQueue = this._purgeQueue.concat(keys);
+      purgeQueue = purgeQueue.concat(keys.map((key) => this._keyStr(key)));
     }
     return instances;
   }
@@ -68,7 +71,7 @@ export default class Cache {
         .execAsync();
     } catch (e) {
       logger.trace('redis error', err);
-      this._purgeQueue.push(instance[this._key]);
+      purgeQueue.push(this._keyStr(instance[this._key]));
       return false;
     }
   }
@@ -84,7 +87,7 @@ export default class Cache {
       return true;
     } catch (e) {
       logger.trace('redis error', err);
-      this._purgeQueue = this._purgeQueue.concat(instances.map((instance) => instance._id));
+      purgeQueue = purgeQueue.concat(instances.map((instance) => this._keyStr(instance[this._key])));
       return false;
     }
   }
@@ -96,7 +99,7 @@ export default class Cache {
       return true;
     } catch (e) {
       logger.trace('redis error', err);
-      this._purgeQueue.push(instance[this._key]);
+      purgeQueue.push(this._keyStr(instance[this._key]));
       return false;
     }
     return ;
@@ -111,7 +114,7 @@ export default class Cache {
       return true;
     } catch (e) {
       logger.trace('redis error', err);
-      this._purgeQueue = this._purgeQueue.concat(instances.map((instance) => instance._id));
+      purgeQueue = purgeQueue.concat(instances.map((instance) => this._keyStr(instance[this._key])));
       return false
     }
   }
