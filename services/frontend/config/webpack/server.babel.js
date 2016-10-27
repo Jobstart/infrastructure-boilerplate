@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import nodeExternals from 'webpack-node-externals';
+import postCssPlugins from '../postcss/plugins';
 
 import banner from './banner';
 
@@ -13,10 +14,7 @@ const globals = {
   __CLIENT__: false,
   __SERVER__: true,
   __PRODUCTION__: true,
-  __DEV__: false,
-  'process.env': {
-    NODE_ENV: 'production'
-  }
+  __DEV__: false
 };
 
 
@@ -64,12 +62,12 @@ const config = {
     }, {
       test: /\.css$/,
       loaders: [
-        'isomorphic-style',
-        'css?modules&sourceMap',
-        'postcss'
+        'isomorph-style',
+        'css?modules&sourceMap&localIdentName=[name]__[local]___[hash:base64:5]',
+        'postcss?sourceMap'
       ]
     }, {
-      test: /\.(graphql|gql)$/,
+      test: /\.(graphql)$/,
       exclude: /node_modules/,
       loader: 'graphql-tag/loader'
     }],
@@ -94,7 +92,8 @@ const config = {
   },
   node: {
     __dirname: true
-  }
+  },
+  postcss: postCssPlugins
 };
 
 export default config;

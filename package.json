@@ -2,9 +2,6 @@
   "name": "infrastructure-boilerplate",
   "version": "1.0.0",
   "description": "Infrastructure boilerplate with a GraphQL middle tier and a isomorphic React frontend",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/thebigredgeek/infrastructure-boilerplate.git"
@@ -43,7 +40,10 @@
     "just-wait": "^1.0.5",
     "mocha": "^3.1.2",
     "nightwatch": "^0.9.8",
-    "rimraf": "^2.5.4"
+    "rimraf": "^2.5.4",
+    "rucksack-css": "^0.8.6"
   },
-  "dependencies": {}
+  "dependencies": {
+    "isomorphic-fetch": "^2.2.1"
+  }
 }

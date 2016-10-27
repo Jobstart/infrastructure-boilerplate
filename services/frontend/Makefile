@@ -22,7 +22,7 @@ lint: .FORCE
 	concurrently "eslint src" "eslint test" "eslint config"
 
 dependencies: .FORCE
-	npm install
+	yarn install
 
 start-server-after-compile: .FORCE
 	just-wait --pattern 'dist/*.js'
@@ -32,7 +32,7 @@ watch-server: .FORCE
 	webpack --watch --verbose --colors --display-error-details --config config/webpack/server-dev.babel.js
 
 watch-client: .FORCE
-	webpack-dev-server --config config/webpack/client-dev.babel.js
+	webpack-dev-server --colors --bail --config config/webpack/client-dev.babel.js
 
 watch: .FORCE
 	concurrently --kill-others "make start-server-after-compile" "make watch-server" "make watch-client"

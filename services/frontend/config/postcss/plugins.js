@@ -8,7 +8,7 @@ import assets from 'postcss-assets';
 import clearfix from 'postcss-clearfix';
 import colors from 'postcss-color-function';
 import fontMagician from 'postcss-font-magician';
-import cssVars from './cssVars';
+import cssVars from './variables';
 
 const mixinsDir = `${process.cwd()}/src/styles/mixins`;
 const basePath = `${process.cwd()}/src/`;

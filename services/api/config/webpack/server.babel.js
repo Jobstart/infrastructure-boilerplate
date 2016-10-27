@@ -13,10 +13,7 @@ const globals = {
   __CLIENT__: false,
   __SERVER__: true,
   __PRODUCTION__: true,
-  __DEV__: false,
-  'process.env': {
-    NODE_ENV: 'production'
-  }
+  __DEV__: false
 };
 
 
@@ -64,8 +61,8 @@ const config = {
   resolve: {
     modulesDirectories: [
       'src',
+      'dist',
       'node_modules',
-      'dist'
     ],
     extensions: ['', '.json', '.js']
   },

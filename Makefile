@@ -29,19 +29,28 @@ clean:
 		"make -C services/api clean" \
 		"rimraf npm-debug.log"
 
+osx-syspackages: .FORCE
+	brew update
+	brew install direnv yarn
+	brew link --overwrite direnv
+
+linux-syspackages: .FORCE
+	apt-key adv --keyserver pgp.mit.edu --recv D101F7899D41F3C3
+	echo "deb http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+	apt-get -y update
+	apt-get install yarn direnv
+	sudo pip install docker-cloud
+
 environment: .FORCE
 	@if [ "${OS_TYPE}" = "osx" ]; then \
-		concurrently \
-			"brew update && brew install direnv && brew link --overwrite direnv" \
-			"make -C services/frontend environment" \
-			"make -C services/api environment"
+		make osx-syspackages; \
 	else \
-		concurrently \
-			"apt-get -y update && apt-get -y install direnv" \
-			"sudo pip install docker-cloud" \
-			"make -C services/frontend environment" \
-			"make -C services/api environment"
+		make linux-syspackages; \
 	fi
+	make dependencies
+	concurrently \
+		"make -C services/frontend environment" \
+		"make -C services/api environment"
 
 configure: .FORCE
 	concurrently \
@@ -50,7 +59,7 @@ configure: .FORCE
 		"direnv allow"
 
 dependencies: .FORCE
-	npm install
+	yarn install
 	concurrently \
 		"make -C services/frontend dependencies" \
 		"make -C services/api dependencies"

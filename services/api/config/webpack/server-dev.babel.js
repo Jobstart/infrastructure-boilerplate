@@ -13,10 +13,7 @@ const globals = {
   __CLIENT__: false,
   __SERVER__: true,
   __PRODUCTION__: false,
-  __DEV__: true,
-  'process.env': {
-    NODE_ENV: 'development'
-  }
+  __DEV__: true
 };
 
 const config = {

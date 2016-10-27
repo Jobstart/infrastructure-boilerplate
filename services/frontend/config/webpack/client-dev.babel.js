@@ -15,14 +15,11 @@ const globals = {
   __CLIENT__: true,
   __SERVER__: false,
   __PRODUCTION__: false,
-  __DEV__: true,
-  'process.env': {
-    NODE_ENV: 'development'
-  }
+  __DEV__: true
 };
 
 const devServer = {
-  publicPath: `http://${envr.HOSTNAME}:${envr.WEBPACK_PORT}/dist`,
+  publicPath: envr.ASSETS_FQDN,
   hot: true,
   inline: false,
   lazy: false,
@@ -33,6 +30,7 @@ const devServer = {
   stats: {
     colors: true
   },
+  port: envr.WEBPACK_PORT,
   host: envr.HOSTNAME
 };
 

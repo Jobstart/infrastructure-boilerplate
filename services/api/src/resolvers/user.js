@@ -9,7 +9,7 @@ const getUserByID = async (root, { query: { _id } }, { connectors: { User } } ) 
 }
 
 const updateUser = async (root, { user: updatedUser }, { user: reqUser, connectors: { User } } ) => {
-  if (updatedUser._id.toString() !== reqUser._id.toString()) return
+  if (updatedUser._id.toString() !== reqUser._id.toString()) throw new Error('Forbidden');
   const user = await User.updateByID(updatedUser._id, updatedUser);
   return user;
 }

@@ -22,7 +22,7 @@ lint: .FORCE
 	concurrently "eslint src" "eslint test" "eslint config"
 
 dependencies: .FORCE
-	npm install
+	yarn install
 
 watch: .FORCE
 	concurrently \

@@ -1,9 +1,11 @@
+import fetch from 'isomorphic-fetch'; // Polyfill global fetch
+
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import { Z_BEST_COMPRESSION } from 'zlib';
 
-import renderer from './renderer';
+import renderer from 'renderer';
 
 let r = renderer;
 
@@ -21,7 +23,7 @@ app.get('/*', (req, res, next) => {
   r(req, res, next);
 });
 
-app.listen(__PORT__, __HOSTNAME__);
+app.listen(__PORT__, __HOSTNAME__, () => console.log(`listening at ${__HOSTNAME__}:${__PORT__}`));
 
 if (__DEV__) {
   if (module.hot) {
