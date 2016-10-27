@@ -11,7 +11,7 @@ import style from 'components/usersTable/index.css';
 
 @graphql(gql`
   query Users ($query: UsersQuery!){
-    getUsersByID (query: $query) {
+    users: getUsersByID (query: $query) {
       ...UserRow
     }
   }
@@ -22,11 +22,9 @@ import style from 'components/usersTable/index.css';
       query: {
         _ids: userIds.replace(/\s/g, '').split(',')
       }
-    },
-    forceFetch: true
+    }
   }),
   props: (props) => {
-    console.log(props.data);
     const { loading, users = []} = props.data;
     return { loading, users };
   }
@@ -41,12 +39,10 @@ export default class UsersTable extends PureComponent {
     super(props, context);
   }
   render () {
-    console.log(this.props.users);
     const { users, loading } = this.props;
     return (
       <div className={style.usersTableContainer}>
         {loading ? 'Loading' : users.map((user, i) => <UserRow key={i} user={user}/>)}
-
       </div>
     );
   }

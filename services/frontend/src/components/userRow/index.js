@@ -1,3 +1,4 @@
+import React from 'react';
 import withStyles from 'isomorph-style-loader/lib/withStyles';
 import PureComponent from 'components/common/pure';
 import { propTypes } from 'lib/decorators/generic';

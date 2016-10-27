@@ -2,7 +2,7 @@ import React from 'react';
 import Promise from 'bluebird';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
-import { getDataFromTree, renderToStringWithData } from 'react-apollo/server';
+import { renderToStringWithData } from 'react-apollo/server';
 import { match, RouterContext } from 'react-router';
 import ReactDOMServer from 'react-dom/server';
 
@@ -47,21 +47,14 @@ export default async function render (req, res, next) {
       </ApolloProvider>
     );
 
-    const initialState = (await getDataFromTree(root)).store.getState();
 
-    const content = ReactDOMServer.renderToString(root);
-
-    //const { markup: content, initialState } = await renderToStringWithData(root);
-
-    console.log(content);
-
-    console.log(initialState);
+    const { markup: content, initialState } = await renderToStringWithData(root);
 
     const html = <Html content={content} state={initialState} style={__PRODUCTION__ ? renderContext.getCssString() : ''} {...initialState.pageInformation}/>
 
     const markup = `<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(html)}`;
 
-    setTimeout(() => res.status(200).send(markup), 2500);
+    res.status(200).send(markup);
   } catch (e) {
     console.trace(e);
     next(e);
