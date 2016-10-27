@@ -52,6 +52,7 @@
     "postcss-simple-vars": "^3.0.0",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.5.4",
+    "rucksack-css": "^0.8.6",
     "sinon": "^1.17.6",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
