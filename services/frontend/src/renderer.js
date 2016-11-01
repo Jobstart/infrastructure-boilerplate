@@ -34,6 +34,9 @@ export default async function render (req, res, next) {
 
     const client = new ApolloClient({
       ssrMode: true,
+      dataIdFromObject: (inst) => {
+        return inst._id || inst.id;
+      },
       networkInterface: createNetworkInterface({
         uri: `${API_FQDN}/graphql`,
         credentials: 'same-origin',

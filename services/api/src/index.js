@@ -12,6 +12,8 @@ import connectSubscriptions from 'io/subscription';
 
 let r = router;
 
+process.on('unhandledRejection', (err) => console.trace(err));
+
 if (__DEV__) {
   if (module.hot) {
     logger.log('[HMR] Waiting for server-side updates');

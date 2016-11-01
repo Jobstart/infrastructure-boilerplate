@@ -13,6 +13,7 @@ import style from 'components/usersTable/index.css';
 const SUBSCRIPTION_QUERY = gql`
   subscription onUpdateUser($query: UpdateUserSubscriptionQuery!){
     updateUser(query: $query){
+      _id
       ...UserRow
     }
   }
@@ -21,6 +22,7 @@ const SUBSCRIPTION_QUERY = gql`
 @graphql(gql`
   query Users ($query: UsersQuery!){
     users: getUsersByID (query: $query) {
+      _id
       ...UserRow
     }
   }

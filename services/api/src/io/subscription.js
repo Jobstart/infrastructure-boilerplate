@@ -26,7 +26,6 @@ const onSubscribe = async (msg, params, req) => {
       user = await UserConnector.getByID(_id);
     }
   } catch (e) {}
-
   return {
     ...params,
     context: {
