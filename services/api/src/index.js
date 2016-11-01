@@ -1,9 +1,14 @@
-import express from 'express';
 import Promise from 'bluebird';
 
-import { logger, ioConnectedPromise, http } from 'io';
+import {
+  logger,
+  ioConnectedPromise,
+  app,
+  server as httpServer
+} from 'io';
 
 import router from 'router';
+import connectSubscriptions from 'io/subscription';
 
 let r = router;
 
@@ -25,10 +30,11 @@ if (__DEV__) {
 
 async function main () {
   try {
-
-    http.use((req, res, next) => r(req, res, next));
+    app.use((req, res, next) => r(req, res, next));
 
     await ioConnectedPromise;
+
+    connectSubscriptions(httpServer);
 
     logger.log(`API listening on ${__HOSTNAME__}:${__PORT__}`);
 

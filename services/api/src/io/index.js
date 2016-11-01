@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 import logger from 'io/logger';
 import redisConnection, { connectionPromise as redisConnectionPromise } from 'io/redis';
 import { mongoConnectionPromise } from 'io/mongo';
-import { listen as httpListen, http } from 'io/http';
+import { listen as httpListen, app, server } from 'io/http';
 
 const ioConnectedPromise = Promise.all([
   redisConnectionPromise,
@@ -16,5 +16,6 @@ export {
   ioConnectedPromise,
   redisConnection,
   logger,
-  http
+  app,
+  server
 };

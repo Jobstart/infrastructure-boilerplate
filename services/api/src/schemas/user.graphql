@@ -57,3 +57,9 @@ input UsersQuery {
   # A list of _id [ObjectId] properties of list of User objects
   _ids: [ObjectId]!
 }
+
+# The UpdateUserSubscriptionQuery type is used to subscribe to a user update
+input UpdateUserSubscriptionQuery {
+  # The _id [ObjectId] property of a User object to subscribe to for updates
+  _id: ObjectId!
+}

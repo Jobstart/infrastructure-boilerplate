@@ -1,9 +1,12 @@
+import http from 'http';
 import express from 'express';
 import Promise from 'bluebird';
 import cors from 'cors';
 
-export const http = express();
+export const app = express();
 
-http.use(cors());
+app.use(cors());
 
-export const listen = new Promise((resolve, reject) => http.listen(__PORT__, __HOSTNAME__, err => err ? reject(err) : resolve()));
+export const server = http.createServer(app);
+
+export const listen = new Promise((resolve, reject) => server.listen(__PORT__, __HOSTNAME__, err => err ? reject(err) : resolve()));

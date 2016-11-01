@@ -1,0 +1,6 @@
+type Subscription {
+  updateUser (
+    # UpdateUserInput to update a User {_id: String!, name: String, email: Email}
+    query: UpdateUserSubscriptionQuery!
+  ): User
+}

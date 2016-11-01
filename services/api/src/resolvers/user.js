@@ -1,3 +1,5 @@
+import pubsub from 'io/pubsub';
+
 const getUsersByID = async (root, { query: { _ids } }, { connectors: { User }} ) => {
   const user = await User.getManyByID(_ids);
   return user;
@@ -10,7 +12,10 @@ const getUserByID = async (root, { query: { _id } }, { connectors: { User } } ) 
 
 const updateUser = async (root, { user: updatedUser }, { user: reqUser, connectors: { User } } ) => {
   if (updatedUser._id.toString() !== reqUser._id.toString()) throw new Error('Forbidden');
-  const user = await User.updateByID(updatedUser._id, updatedUser);
+  const user = await User.updateByID(updatedUser._id, updatedUser).then((user) => {
+    pubsub.publish('updateUser', user.toObject());
+    return user;
+  });
   return user;
 }
 
@@ -34,6 +39,14 @@ const loginUser = async (root, { user: { email, password } }, context) => {
   };
 };
 
+export const subscriptionMappings = {
+  updateUser: (options, { query: { _id } }) => ({ //for the updateUser subscription
+    // For the updateUser channel
+    // Push to the subscription if the incoming channel User matches the subscription args provided
+    updateUser: user => user._id.toString() === args.query._id
+  })
+};
+
 export default {
   Query: {
     getUsersByID,
@@ -43,5 +56,8 @@ export default {
     updateUser,
     signupUser,
     loginUser
+  },
+  Subscription: {
+    updateUser: (user) => user
   }
 }

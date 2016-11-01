@@ -72,6 +72,7 @@
     "moment": "^2.15.1",
     "react": "^15.3.2",
     "react-addons-pure-render-mixin": "^15.3.2",
+    "react-addons-update": "^15.3.2",
     "react-apollo": "^0.5.13",
     "react-cookie": "^0.4.8",
     "react-dom": "^15.3.2",
@@ -81,6 +82,7 @@
     "redux": "^3.6.0",
     "redux-actions": "^0.12.0",
     "source-map-support": "^0.4.5",
+    "subscriptions-transport-ws": "^0.3.0",
     "underscore": "^1.8.3"
   }
 }
