@@ -7,6 +7,11 @@ import {
   server as httpServer
 } from 'io';
 
+import {
+  HOSTNAME,
+  PORT
+} from '../config/environment';
+
 import router from 'router';
 import connectSubscriptions from 'io/subscription';
 
@@ -38,7 +43,7 @@ async function main () {
 
     connectSubscriptions(httpServer);
 
-    logger.log(`API listening on ${__HOSTNAME__}:${__PORT__}`);
+    logger.log(`API listening on ${HOSTNAME}:${PORT}`);
 
 
   } catch (e) {

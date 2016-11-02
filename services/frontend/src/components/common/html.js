@@ -3,6 +3,8 @@ import _ from 'underscore';
 
 import { propTypes, defaultProps } from 'lib/decorators/generic';
 
+import { ASSETS_FQDN, API_FQDN, WS_FQDN } from '../../../config/environment';
+
 @propTypes(({ string, shape, arrayOf, element, object }) => ({
   title: string.isRequired,
   description: string.isRequired,
@@ -176,14 +178,22 @@ export default class Html extends Component {
     );
   }
   render () {
+    const js = `
+      window.cfg = {
+        API_FQDN: ${JSON.stringify(API_FQDN)},
+        WS_FQDN: ${JSON.stringify(WS_FQDN)},
+        ASSETS_FQDN: ${JSON.stringify(ASSETS_FQDN)}
+      };
+      window.__INITIAL_STATE__=${JSON.stringify(this.props.state)}
+    `;
     return (
       <html
         lang={this.props.lang}>
         {this._renderHead()}
         <body>
           <div id="root" dangerouslySetInnerHTML={{ __html: this.props.content }} />
-          <script dangerouslySetInnerHTML={{ __html: `window.__INITIAL_STATE__=${JSON.stringify(this.props.state)}`}}></script>
-          <script src={`${__ASSETS_FQDN__}/client.js`}></script>
+          <script dangerouslySetInnerHTML={{ __html: js}}></script>
+          <script src={`${ASSETS_FQDN}/client.js?t=${__BUILD_STAMP__}`}></script>
         </body>
       </html>
     );

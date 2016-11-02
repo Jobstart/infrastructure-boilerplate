@@ -1,19 +1,18 @@
 PATH := node_modules/.bin:../../node_modules/.bin:$(PATH)
 SHELL := /bin/bash
 
+DOCKER_REPO := api
+
 .FORCE:
 
 all: clean .FORCE
 	webpack --colors --display-error-details --config config/webpack/server.babel.js
 
-shrinkwrap: .FORCE
-	npm shrinkwrap --production
-
 image: shrinkwrap .FORCE
 	docker build -t user/repo:test
 
 clean:
-	concurrently "rimraf dist" "rimraf npm-shrinkwrap.json"
+	concurrently "rimraf dist"
 
 test: .FORCE
 	mocha
@@ -22,7 +21,7 @@ lint: .FORCE
 	concurrently "eslint src" "eslint test" "eslint config"
 
 dependencies: .FORCE
-	yarn install
+	yarn
 
 watch: .FORCE
 	concurrently \
@@ -30,8 +29,7 @@ watch: .FORCE
 		"just-wait --pattern 'dist/*.js' && node dist/index"
 
 package: .FORCE
-	npm shrinkwrap --production
-	docker build -t $DOCKER_USER/$DOCKER_REPO:$DOCKER_TAG
+	docker build -t $(DOCKER_ACCOUNT)/$(DOCKER_REPO):$(DOCKER_TAG) .
 
 deploy: .FORCE
 	./scripts/deploy.sh

@@ -6,10 +6,10 @@ import { ApolloProvider } from 'react-apollo';
 import routesFactory from 'routes';
 import addGraphQLSubscriptions from 'lib/subscriptions';
 
-const subClient = new SubClient(__WS_FQDN__);
+const subClient = new SubClient(window.cfg.WS_FQDN);
 
 const networkInterface = createNetworkInterface({
-  uri: `${__API_FQDN__}/graphql`,
+  uri: `${window.cfg.API_FQDN}/graphql`,
   opts: {
     credentials: 'same-origin'
   }

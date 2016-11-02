@@ -7,6 +7,11 @@ import { Z_BEST_COMPRESSION } from 'zlib';
 
 import renderer from 'renderer';
 
+import {
+  PORT,
+  HOSTNAME
+} from '../config/environment';
+
 let r = renderer;
 
 const app = express();
@@ -23,7 +28,7 @@ app.get('/*', (req, res, next) => {
   r(req, res, next);
 });
 
-app.listen(__PORT__, __HOSTNAME__, () => console.log(`listening at ${__HOSTNAME__}:${__PORT__}`));
+app.listen(PORT, HOSTNAME, () => console.log(`listening at ${HOSTNAME}:${PORT}`));
 
 if (__DEV__) {
   if (module.hot) {

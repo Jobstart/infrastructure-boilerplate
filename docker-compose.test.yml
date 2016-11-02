@@ -1,0 +1,32 @@
+redis:
+  image: redis:3-alpine
+
+mongo:
+  image: mongo:3
+
+api:
+  image: $DOCKER_ACCOUNT/api
+  ports:
+    - "$API_SERVER_PORT:$API_SERVER_PORT"
+  links:
+    - redis:redis
+    - mongo:mongo
+  environment:
+    - PORT=$API_SERVER_PORT
+    - REDIS_HOST=redis
+    - REDIS_PORT=6379
+    - MONGO_HOST=mongo
+    - MONGO_PORT=27017
+    - MONGO_DB=$API_MONGO_DB
+    - JWT_SECRET=geqaihv3uf893qu89ghiooigd
+
+frontend:
+  image: $DOCKER_ACCOUNT/frontend
+  ports:
+    - "$FRONTEND_SERVER_PORT:$FRONTEND_SERVER_PORT"
+  links:
+    - api:api
+  environment:
+    - PORT=$FRONTEND_SERVER_PORT
+    - API_FQDN=http://api:$API_SERVER_PORT
+    - ASSETS_FQDN=http://localhost:$STATIC_PORT

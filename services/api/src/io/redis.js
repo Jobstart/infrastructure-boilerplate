@@ -1,13 +1,18 @@
 import redis from 'redis';
 import Promise from 'bluebird';
 
+import {
+  REDIS_HOST,
+  REDIS_PORT
+} from '../../config/environment';
+
 Promise.promisifyAll(redis.RedisClient.prototype);
 Promise.promisifyAll(redis.Multi.prototype);
 
 let handled = false;
 
 const connection = redis.createClient({
-  url: `redis://${__REDIS_HOST__}:${__REDIS_PORT__}`,
+  url: `redis://${REDIS_HOST}:${REDIS_PORT}`,
   prefix: 'api',
   enable_offline_queue: false
 });

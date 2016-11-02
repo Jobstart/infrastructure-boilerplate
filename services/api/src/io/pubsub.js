@@ -1,8 +1,13 @@
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 
+import {
+  REDIS_HOST,
+  REDIS_PORT
+} from '../../config/environment';
+
 const connection = {
-  host: __REDIS_HOST__,
-  port: __REDIS_PORT__,
+  host: REDIS_HOST,
+  port: REDIS_PORT,
   prefix: 'api-pubsub',
   enable_offline_queue: false
 };

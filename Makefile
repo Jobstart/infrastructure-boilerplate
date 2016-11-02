@@ -49,6 +49,7 @@ environment: .FORCE
 	fi
 	make dependencies
 	concurrently \
+		"yarn global add node-static" \
 		"make -C services/frontend environment" \
 		"make -C services/api environment"
 
@@ -59,8 +60,8 @@ configure: .FORCE
 		"direnv allow"
 
 dependencies: .FORCE
-	yarn install
 	concurrently \
+		"yarn" \
 		"make -C services/frontend dependencies" \
 		"make -C services/api dependencies"
 
@@ -105,3 +106,6 @@ api-mongo: .FORCE
 
 api-redis: .FORCE
 	redis-cli -h ${REDIS_HOST} -p ${REDIS_PORT}
+
+static-assets-server: .FORCE
+	static --port ${STATIC_PORT} -H '{"Access-Control-Allow-Origin": "*"}' services/frontend/dist
