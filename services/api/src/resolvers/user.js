@@ -43,7 +43,9 @@ export const subscriptionMappings = {
   updateUser: (options, { query: { _id } }) => ({ //for the updateUser subscription
     // For the updateUser channel
     // Push to the subscription if the incoming channel User matches the subscription args provided
-    updateUser: user => user._id.toString() === args.query._id
+    updateUser: {
+      filter: user => user._id.toString() === _id
+    }
   })
 };
 
@@ -58,6 +60,8 @@ export default {
     loginUser
   },
   Subscription: {
-    updateUser: (user) => user
+    updateUser: function (user) {
+      return user;
+    }
   }
 }

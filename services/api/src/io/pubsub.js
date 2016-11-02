@@ -1,16 +1,14 @@
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 
-const triggerTransform = (trigger, {path}) => [trigger, ...path].join('.');
-
 const connection = {
-  url: `redis://${__REDIS_HOST__}:${__REDIS_PORT__}`,
-  prefix: 'api',
+  host: __REDIS_HOST__,
+  port: __REDIS_PORT__,
+  prefix: 'api-pubsub',
   enable_offline_queue: false
 };
 
 const pubsub = new RedisPubSub({
-  connection,
-  triggerTransform
+  connection
 });
 
 export default pubsub;

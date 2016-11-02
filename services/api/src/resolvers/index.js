@@ -12,6 +12,4 @@ export const setupFunctions = {
   ...userSubscriptionMappings
 };
 
-console.log(setupFunctions);
-
 export default resolvers;
