@@ -1,4 +1,5 @@
 export const HOSTNAME = process.env.HOSTNAME || 'localhost';
+export const NODE_ENV = process.env.NODE_ENV || 'development';
 export const WEBPACK_PORT = process.env.API_WEBPACK_PORT;
 export const PORT = process.env.PORT || process.env.API_SERVER_PORT;
 

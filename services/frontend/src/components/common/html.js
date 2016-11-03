@@ -3,7 +3,7 @@ import _ from 'underscore';
 
 import { propTypes, defaultProps } from 'lib/decorators/generic';
 
-import { ASSETS_FQDN, API_FQDN, WS_FQDN } from '../../../config/environment';
+import { ASSETS_FQDN, API_FQDN, WS_FQDN, NODE_ENV } from '../../../config/environment';
 
 @propTypes(({ string, shape, arrayOf, element, object }) => ({
   title: string.isRequired,
@@ -171,6 +171,8 @@ export default class Html extends Component {
         />
         ) : null}
 
+        <link rel="dns-prefetch" href={ASSETS_FQDN}/>
+        <link rel="dns-prefetch" href={API_FQDN}/>
 
         {/* Preloads */}
         <style id="css" dangerouslySetInnerHTML={{__html: this.props.style}}/>
@@ -186,6 +188,13 @@ export default class Html extends Component {
       };
       window.__INITIAL_STATE__=${JSON.stringify(this.props.state)}
     `;
+
+    console.log('production?', __PRODUCTION__);
+
+    const assetRoot = `${ASSETS_FQDN}${__PRODUCTION__ ? '/' + __BUILD_STAMP__ : '' }`;
+
+    console.log('assetRoot', assetRoot);
+
     return (
       <html
         lang={this.props.lang}>
@@ -193,8 +202,8 @@ export default class Html extends Component {
         <body>
           <div id="root" dangerouslySetInnerHTML={{ __html: this.props.content }} />
           <script dangerouslySetInnerHTML={{ __html: js}}></script>
-          <script src={`${ASSETS_FQDN}/vendor.js?t=${__BUILD_STAMP__}`}></script>
-          <script src={`${ASSETS_FQDN}/client.js?t=${__BUILD_STAMP__}`}></script>
+          <script src={`${assetRoot}/vendor.js`}></script>
+          <script src={`${assetRoot}/client.js`}></script>
         </body>
       </html>
     );

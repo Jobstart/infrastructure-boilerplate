@@ -5,13 +5,20 @@ import forLoops from 'postcss-for';
 import calc from 'postcss-calc';
 import mixins from 'postcss-mixins';
 import assets from 'postcss-assets';
+//import assetsRebase from 'postcss-assets-rebase';
+import url from 'postcss-url';
 import clearfix from 'postcss-clearfix';
 import colors from 'postcss-color-function';
 import fontMagician from 'postcss-font-magician';
 import cssVars from './variables';
 
+import {
+  ASSETS_FQDN
+} from '../environment';
+
 const mixinsDir = `${process.cwd()}/src/styles/mixins`;
 const basePath = `${process.cwd()}/src/`;
+const baseUrl = ASSETS_FQDN;
 const loadPaths = ['assets/', 'assets/fonts', 'assets/images'];
 
 const config = [
@@ -27,9 +34,13 @@ const config = [
   mixins({
     mixinsDir
   }),
+  url({
+    url: 'rebase'
+  }),
   assets({
     basePath,
-    loadPaths
+    loadPaths,
+    baseUrl
   }),
   fontMagician(),
   rucksack({

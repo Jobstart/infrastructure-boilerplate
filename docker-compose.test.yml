@@ -12,6 +12,7 @@ api:
     - redis:redis
     - mongo:mongo
   environment:
+    - NODE_ENV=production
     - PORT=$API_SERVER_PORT
     - REDIS_HOST=redis
     - REDIS_PORT=6379
@@ -27,7 +28,8 @@ frontend:
   links:
     - api:api
   environment:
+    - NODE_ENV=production
     - PORT=$FRONTEND_SERVER_PORT
     - API_FQDN=http://api:$API_SERVER_PORT
     - BROWSER_API_FQDN=http://localhost:$API_SERVER_PORT
-    - ASSETS_FQDN=http://localhost:$STATIC_PORT
+    - ASSETS_FQDN=https://assets.jobstart.com

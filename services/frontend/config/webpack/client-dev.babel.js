@@ -1,4 +1,5 @@
 import webpack from 'webpack';
+import CopyPlugin from 'copy-webpack-plugin';
 import fs from 'fs';
 
 import base from './client.babel';
@@ -58,7 +59,17 @@ const config = {
     new webpack.DefinePlugin(globals),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new CopyPlugin([{
+      from: 'assets/fonts/**',
+      to: 'dist'
+    }, {
+      from: 'assets/images/**',
+      to: 'dist'
+    }, {
+      from: 'assets/sounds/**',
+      to: 'dist'
+    }])
   ],
   module: {
     ...base.module,

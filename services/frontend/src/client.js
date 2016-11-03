@@ -7,7 +7,7 @@ import routesFactory from 'routes';
 import { Router, match, browserHistory as history } from 'react-router';
 import addGraphQLSubscriptions from 'lib/subscriptions';
 
-__webpack_public_path__ = window.cfg.ASSETS_FQDN + '/';
+__webpack_public_path__ = __PRODUCTION__ ? `${window.cfg.ASSETS_FQDN}/${__BUILD_STAMP__}/` : `${window.cfg.ASSETS_FQDN}/`;
 
 const subClient = new SubClient(window.cfg.WS_FQDN);
 
@@ -36,5 +36,5 @@ match({ history, routes}, (err, redirectLocation, renderProps) => {
     <ApolloProvider client={client}>
       <Router {...renderProps}/>
     </ApolloProvider>
-  ), document.getElementById('root'), () => console.log('render complete'))
+  ), document.getElementById('root'));
 });

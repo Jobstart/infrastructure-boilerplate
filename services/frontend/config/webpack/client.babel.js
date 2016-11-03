@@ -1,4 +1,6 @@
 import webpack from 'webpack';
+import S3Plugin from 'webpack-s3-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
 import postCssPlugins from '../postcss/plugins';
 import pkg from '../../package.json';
 
@@ -36,14 +38,24 @@ const config = {
   output: {
     path: `${process.cwd()}/dist`,
     filename: 'client.js',
-    chunkFilename: '[name].[hash].js'
+    chunkFilename: '[hash].js'
   },
   plugins: [
     new webpack.DefinePlugin(globals),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
     new webpack.optimize.DedupePlugin(),
 		new webpack.optimize.OccurenceOrderPlugin(),
-		new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}})
+		new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
+    new CopyPlugin([{
+      from: 'assets/fonts/**',
+      to: 'dist'
+    }, {
+      from: 'assets/images/**',
+      to: 'dist'
+    }, {
+      from: 'assets/sounds/**',
+      to: 'dist'
+    }])
   ],
   module: {
     loaders: [{
@@ -94,6 +106,37 @@ const config = {
   },
   postcss: postCssPlugins
 };
+
+if (
+  envr.ASSETS_FQDN.indexOf('http://localhost') === -1 &&
+  envr.ASSETS_FQDN.indexOf('http://127.0.0.1') === -1 &&
+  envr.S3_ACCESS_KEY_ID &&
+  envr.S3_SECRET_ACCESS_KEY &&
+  envr.S3_REGION &&
+  envr.S3_BUCKET &&
+  envr.CF_DISTRIBUTION_ID
+) {
+  config.plugins.push(new S3Plugin({
+    s3Options: {
+      accessKeyId: envr.S3_ACCESS_KEY_ID,
+      secretAccessKey: envr.S3_SECRET_ACCESS_KEY,
+      region: envr.S3_REGION,
+    },
+    s3UploadOptions: {
+      Bucket: envr.S3_BUCKET
+    },
+    cdnizerOptions: {
+      defaultCDNBase: envr.ASSETS_FQDN
+    },
+    cloudfrontInvalidateOptions: {
+      DistributionId: envr.CF_DISTRIBUTION_ID,
+      Items: [`/${envr.BUILD_STAMP}/**`]
+    },
+    basePathTransform: () => {
+      return envr.BUILD_STAMP;
+    }
+  }));
+}
 
 export default config;
 module.exports = config; //needed for webpack (uses commonjs require)
