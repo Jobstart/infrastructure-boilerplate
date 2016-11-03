@@ -39,11 +39,14 @@ const config = {
   ...base,
   cache: true,
   devtool: 'cheap-module-eval-source-map',
-  entry: [
-    `webpack-dev-server/client?http://${envr.HOSTNAME}:${envr.WEBPACK_PORT}`,
-    'webpack/hot/only-dev-server',
-    ...base.entry
-  ],
+  entry: {
+    ...base.entry,
+    client: [
+      `webpack-dev-server/client?http://${envr.HOSTNAME}:${envr.WEBPACK_PORT}`,
+      'webpack/hot/only-dev-server',
+      ...base.entry.client
+    ]
+  },
   devServer,
   output: {
     ...base.output,
@@ -53,6 +56,7 @@ const config = {
   },
   plugins: [
     new webpack.DefinePlugin(globals),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],

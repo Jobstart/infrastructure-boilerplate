@@ -194,6 +194,7 @@ export default class Html extends Component {
         <body>
           <div id="root" dangerouslySetInnerHTML={{ __html: this.props.content }} />
           <script dangerouslySetInnerHTML={{ __html: js}}></script>
+          <script src={`${ASSETS_FQDN}/vendor.js?t=${__BUILD_STAMP__}`}></script>
           <script src={`${ASSETS_FQDN}/client.js?t=${__BUILD_STAMP__}`}></script>
         </body>
       </html>

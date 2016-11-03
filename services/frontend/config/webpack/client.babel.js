@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import postCssPlugins from '../postcss/plugins';
+import pkg from '../../package.json';
 
 import * as envr from '../environment';
 
@@ -23,17 +24,23 @@ const config = {
   context: __dirname,
   debug: false,
   devtool: false,
-  entry: [
-    'babel-polyfill',
-    '../../src/client'
-  ],
+  entry: {
+    client: [
+      'babel-polyfill',
+      '../../src/client'
+    ],
+    vendor: [
+      ...pkg.webpack.vendor
+    ]
+  },
   output: {
     path: `${process.cwd()}/dist`,
     filename: 'client.js',
-    chunkFilename: '[name].js'
+    chunkFilename: '[name].[hash].js'
   },
   plugins: [
     new webpack.DefinePlugin(globals),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
     new webpack.optimize.DedupePlugin(),
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}})

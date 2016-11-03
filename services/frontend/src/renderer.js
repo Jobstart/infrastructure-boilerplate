@@ -3,7 +3,7 @@ import Promise from 'bluebird';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { renderToStringWithData } from 'react-apollo/server';
-import { match, RouterContext } from 'react-router';
+import { match, RouterContext, createMemoryHistory} from 'react-router';
 import ReactDOMServer from 'react-dom/server';
 
 import routesFactory from 'routes';
@@ -26,7 +26,11 @@ export default async function render (req, res, next) {
   try {
     const { renderContext, routes } = routesFactory();
 
-    const { redirectLocation, renderProps } = await matchAsync({ routes: routes, location: req.originalUrl });
+    const location = req.originalUrl;
+
+    const history = createMemoryHistory();
+
+    const { redirectLocation, renderProps } = await matchAsync({ history, routes, location });
 
     if (redirectLocation) {
       return res.redirect(redirectLocation.pathname + redirectLocation.search);

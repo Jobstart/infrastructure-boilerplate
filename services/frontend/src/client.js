@@ -4,6 +4,7 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { Client as SubClient } from 'subscriptions-transport-ws';
 import { ApolloProvider } from 'react-apollo';
 import routesFactory from 'routes';
+import { Router, match, browserHistory as history } from 'react-router';
 import addGraphQLSubscriptions from 'lib/subscriptions';
 
 const subClient = new SubClient(window.cfg.WS_FQDN);
@@ -26,12 +27,12 @@ const client = new ApolloClient({
   initialState: window.__INITIAL_STATE__
 });
 
-const { renderContext, routes } = routesFactory();
+const { routes } = routesFactory();
 
-const root = document.getElementById('root');
-
-render((
-  <ApolloProvider client={client}>
-    {routes}
-  </ApolloProvider>
-), document.getElementById('root'));
+match({ history, routes}, (err, redirectLocation, renderProps) => {
+  render((
+    <ApolloProvider client={client}>
+      <Router {...renderProps}/>
+    </ApolloProvider>
+  ), document.getElementById('root'), () => console.log('render complete'))
+});

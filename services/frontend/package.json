@@ -68,6 +68,7 @@
     "history": "^4.3.0",
     "hoist-non-react-statics": "^1.2.0",
     "isomorph-style-loader": "^1.0.1",
+    "isomorphic-ensure": "^1.0.1",
     "moment": "^2.15.1",
     "react": "^15.3.2",
     "react-addons-pure-render-mixin": "^15.3.2",
@@ -83,5 +84,28 @@
     "source-map-support": "^0.4.5",
     "subscriptions-transport-ws": "^0.3.0",
     "underscore": "^1.8.3"
+  },
+  "webpack": {
+    "vendor": [
+      "apollo-client",
+      "graphql-fragments",
+      "graphql-tag",
+      "history",
+      "hoist-non-react-statics",
+      "moment",
+      "react",
+      "react-addons-pure-render-mixin",
+      "react-addons-update",
+      "react-apollo",
+      "react-cookie",
+      "react-dom",
+      "react-redux",
+      "react-router",
+      "react-router-redux",
+      "redux",
+      "redux-actions",
+      "subscriptions-transport-ws",
+      "underscore"
+    ]
   }
 }

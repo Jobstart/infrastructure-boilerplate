@@ -2931,6 +2931,10 @@ isomorph-style-loader@^1.0.1:
     hoist-non-react-statics "^1.2.0"
     loader-utils "^0.2.16"
 
+isomorphic-ensure:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/isomorphic-ensure/-/isomorphic-ensure-1.0.1.tgz#ad31cf71e62bba7a3fe4f0ae6b8a22f338c6ea1c"
+
 isomorphic-fetch@^2.1.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
