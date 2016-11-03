@@ -24,6 +24,7 @@ const devServer = {
   inline: false,
   lazy: false,
   quiet: true,
+  debug: true,
   headers: {
     'Access-Control-Allow-Origin': '*'
   },
@@ -37,7 +38,6 @@ const devServer = {
 const config = {
   ...base,
   cache: true,
-  debug: true,
   devtool: 'cheap-module-eval-source-map',
   entry: [
     `webpack-dev-server/client?http://${envr.HOSTNAME}:${envr.WEBPACK_PORT}`,

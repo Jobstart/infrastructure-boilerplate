@@ -32,7 +32,7 @@ const config = {
     new webpack.DefinePlugin(globals),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new webpack.BannerPlugin(banner, { raw: true, entryOnly: false })
+    new webpack.BannerPlugin(banner, {raw: true, entryOnly: false })
   ]
 };
 

@@ -60,8 +60,8 @@ configure: .FORCE
 		"direnv allow"
 
 dependencies: .FORCE
+	yarn
 	concurrently \
-		"yarn" \
 		"make -C services/frontend dependencies" \
 		"make -C services/api dependencies"
 
@@ -108,4 +108,4 @@ api-redis: .FORCE
 	redis-cli -h ${REDIS_HOST} -p ${REDIS_PORT}
 
 static-assets-server: .FORCE
-	static --port ${STATIC_PORT} -H '{"Access-Control-Allow-Origin": "*"}' services/frontend/dist
+	static --gzip --port ${STATIC_PORT} -H '{"Access-Control-Allow-Origin": "*"}' services/frontend/dist

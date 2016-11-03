@@ -22,7 +22,6 @@ const config = {
   target: 'node',
   cache: false,
   context: __dirname,
-  debug: false,
   devtool: 'source-map',
   entry: [
     'babel-polyfill',
@@ -34,7 +33,7 @@ const config = {
   },
   plugins: [
     new webpack.DefinePlugin(globals),
-    new webpack.BannerPlugin(banner, { raw: true, entryOnly: false })
+    new webpack.BannerPlugin(banner, {raw: true, entryOnly: false })
   ],
   module: {
     loaders: [{

@@ -11,7 +11,10 @@ const globals = {
   __CLIENT__: true,
   __SERVER__: false,
   __PRODUCTION__: true,
-  __DEV__: false
+  __DEV__: false,
+  'process.env': {
+    NODE_ENV: JSON.stringify('production')
+  }
 };
 
 const config = {

@@ -29,4 +29,5 @@ frontend:
   environment:
     - PORT=$FRONTEND_SERVER_PORT
     - API_FQDN=http://api:$API_SERVER_PORT
+    - BROWSER_API_FQDN=http://localhost:$API_SERVER_PORT
     - ASSETS_FQDN=http://localhost:$STATIC_PORT
