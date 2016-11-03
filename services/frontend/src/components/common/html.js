@@ -178,7 +178,6 @@ export default class Html extends Component {
     );
   }
   render () {
-    console.log(ASSETS_FQDN);
     const js = `
       window.cfg = {
         API_FQDN: ${JSON.stringify(API_FQDN)},

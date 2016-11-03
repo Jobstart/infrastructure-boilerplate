@@ -13,7 +13,7 @@ endif
 .FORCE:
 
 all: clean .FORCE
-	concurrently \
+	NODE_ENV=production concurrently \
 		"make -C services/frontend" \
 		"make -C services/api"
 

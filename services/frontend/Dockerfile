@@ -11,8 +11,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Copy compiled source
-COPY dist/server.js /usr/src/app
-COPY dist/server.js.map /usr/src/app
+COPY dist/**server.** /usr/src/app/
 
 # Install app dependencies
 COPY package.json /usr/src/app/

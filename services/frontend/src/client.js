@@ -7,6 +7,8 @@ import routesFactory from 'routes';
 import { Router, match, browserHistory as history } from 'react-router';
 import addGraphQLSubscriptions from 'lib/subscriptions';
 
+__webpack_public_path__ = window.cfg.ASSETS_FQDN + '/';
+
 const subClient = new SubClient(window.cfg.WS_FQDN);
 
 const networkInterface = createNetworkInterface({
