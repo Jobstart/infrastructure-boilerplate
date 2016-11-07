@@ -14,19 +14,19 @@ endif
 
 all: clean .FORCE
 	NODE_ENV=production concurrently \
-		"make -C services/frontend" \
-		"make -C services/api"
+		"make -C services/client" \
+		"make -C services/graphql"
 
 lint: .FORCE
 	concurrently \
-		"make -C services/frontend lint" \
-		"make -C services/api lint" \
+		"make -C services/client lint" \
+		"make -C services/graphql lint" \
 		"eslint common"
 
 clean:
 	concurrently \
-		"make -C services/frontend clean" \
-		"make -C services/api clean" \
+		"make -C services/client clean" \
+		"make -C services/graphql clean" \
 		"rimraf npm-debug.log"
 
 osx-syspackages: .FORCE
@@ -50,20 +50,20 @@ environment: .FORCE
 	make dependencies
 	concurrently \
 		"yarn global add node-static" \
-		"make -C services/frontend environment" \
-		"make -C services/api environment"
+		"make -C services/client environment" \
+		"make -C services/graphql environment"
 
 configure: .FORCE
 	concurrently \
-		"make -C services/frontend configure" \
-		"make -C services/api configure" \
+		"make -C services/client configure" \
+		"make -C services/graphql configure" \
 		"direnv allow"
 
 dependencies: .FORCE
 	yarn
 	concurrently \
-		"make -C services/frontend dependencies" \
-		"make -C services/api dependencies"
+		"make -C services/client dependencies" \
+		"make -C services/graphql dependencies"
 
 containers-up: .FORCE
 	docker-compose up -d
@@ -77,13 +77,13 @@ containers-rm: .FORCE
 
 seed: .FORCE
 	concurrently \
-		"make -C services/frontend seed" \
-		"make -C services/api seed"
+		"make -C services/client seed" \
+		"make -C services/graphql seed"
 
 test: .FORCE
 	concurrently \
-		"make -C services/frontend test" \
-		"make -C services/api test" \
+		"make -C services/client test" \
+		"make -C services/graphql test" \
 		"make test-e2e"
 
 test-e2e: .FORCE
@@ -93,18 +93,18 @@ test-e2e: .FORCE
 
 deploy: .FORCE
 	concurrently \
-		"make -C services/frontend deploy" \
-		"make -C services/api deploy"
+		"make -C services/client deploy" \
+		"make -C services/graphql deploy"
 
 package: .FORCE
 	concurrently \
-		"make -C services/frontend package" \
-		"make -C services/api package"
+		"make -C services/client package" \
+		"make -C services/graphql package"
 
 watch: clean .FORCE
 	concurrently \
-		"make -C services/frontend watch" \
-		"make -C services/api watch"
+		"make -C services/client watch" \
+		"make -C services/graphql watch"
 
 api-mongo: .FORCE
 	mongo mongodb://${MONGO_HOST}:${MONGO_PORT}/${API_MONGO_DB}
@@ -113,4 +113,4 @@ api-redis: .FORCE
 	redis-cli -h ${REDIS_HOST} -p ${REDIS_PORT}
 
 static-assets-server: .FORCE
-	static --gzip --port ${STATIC_PORT} -H '{"Access-Control-Allow-Origin": "*"}' services/frontend/dist
+	static --gzip --port ${STATIC_PORT} -H '{"Access-Control-Allow-Origin": "*"}' services/client/dist
