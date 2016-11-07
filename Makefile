@@ -84,7 +84,12 @@ test: .FORCE
 	concurrently \
 		"make -C services/frontend test" \
 		"make -C services/api test" \
-		"nightwatch -c config/nightwatch/config.js"
+		"make test-e2e"
+
+test-e2e: .FORCE
+	docker-compose -f docker-compose.test.yml up -d
+	sleep 10
+	nightwatch -c config/nightwatch/config.js
 
 deploy: .FORCE
 	concurrently \

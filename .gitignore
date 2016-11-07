@@ -5,6 +5,7 @@ services/*/npm-debug.log
 services/*/yarn-error.log
 services/*/npm-shrinkwrap.json
 services/*/dist
+test/e2e/_dist
 reports
 npm-debug.log
 yarn-error.log

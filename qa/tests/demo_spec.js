@@ -28,7 +28,7 @@ describe('Google demo test for Mocha', function() {
         .expect.element('body').to.be.present.before(1000);
 
       client.setValue('input[type=text]', ['nightwatch', client.Keys.ENTER])
-        .pause(1000)
+        .pause(2000)
         .assert.containsText('#main', 'Night Watch');
     });
   });
