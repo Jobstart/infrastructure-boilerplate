@@ -1,19 +1,19 @@
 import pubsub from 'io/pubsub';
 
-const getUsersByID = async (root, { query: { _ids } }, { connectors: { User }} ) => {
-  const user = await User.getManyByID(_ids);
+const getUsersByID = async (root, { query: { ids } }, { connectors: { User }} ) => {
+  const user = await User.getManyByID(ids);
   return user;
-}
+};
 
-const getUserByID = async (root, { query: { _id } }, { connectors: { User } } ) => {
-  const user = await User.getByID(_id);
+const getUserByID = async (root, { query: { id } }, { connectors: { User } } ) => {
+  const user = await User.getByID(id);
   return user;
 }
 
 const updateUser = async (root, { user: updatedUser }, { user: reqUser, connectors: { User } } ) => {
-  if (updatedUser._id.toString() !== reqUser._id.toString()) throw new Error('Forbidden');
-  const user = await User.updateByID(updatedUser._id, updatedUser).then((user) => {
-    pubsub.publish('updateUser', user.toObject());
+  if (updatedUser.id.toString() !== reqUser.id.toString()) throw new Error('Forbidden');
+  const user = await User.updateByID(updatedUser.id, updatedUser).then((user) => {
+    pubsub.publish('updateUser', user.toJSON());
     return user;
   });
   return user;
@@ -24,7 +24,7 @@ const signupUser = async (root, { user: { name, email, password } },  context) =
   const { user, token } = await User.signup({ name, email, password });
   context.user = user; // attach user to context for subsequent requests
   return {
-    ...user.toObject(),
+    ...user.toJSON(),
     token
   };
 };
@@ -34,7 +34,7 @@ const loginUser = async (root, { user: { email, password } }, context) => {
   const { user, token } = await User.login({ email, password });
   context.user = user; //attach user to context for subsequent requests
   return {
-    ...user.toObject(),
+    ...user.toJSON(),
     token
   };
 };
@@ -44,7 +44,7 @@ export const subscriptionMappings = {
     // For the updateUser channel
     // Push to the subscription if the incoming channel User matches the subscription args provided
     updateUser: {
-      filter: user => user._id.toString() === _id
+      filter: user => user.id.toString() === _id
     }
   })
 };

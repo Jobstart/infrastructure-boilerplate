@@ -24,8 +24,8 @@ redis.on('ready', async () => {
 });
 
 export default class Cache {
-  constructor (model, key = '_id', ttl = 3600) {
-    this._name = model.modelName.toLowerCase();
+  constructor (model, modelName, key = '_id', ttl = 3600) {
+    this._name = modelName.toLowerCase();
     this._key = key;
     this._ttl = __DEV__ ? ttl : 30;
     this._purgeQueue = [];

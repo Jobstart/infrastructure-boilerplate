@@ -1,6 +1,6 @@
 query getUserByID($query: UserQuery!) {
   user: getUserByID(query: $query) {
-    _id
+    id
     name
     email
     time_updated
@@ -10,6 +10,6 @@ query getUserByID($query: UserQuery!) {
 # QUERY PARAMS
 # {
 #   "query": {
-#   	"_id": "580b1bf69649126445c78353"
+#   	"id": 1
 #   }
 # }

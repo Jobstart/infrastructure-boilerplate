@@ -2,7 +2,7 @@ import Cache from 'adapters/base/cache';
 
 export default class MongooseCache extends Cache {
   constructor (model) {
-    super(model, '_id');
+    super(model, model.modelName, '_id');
     this._model = model;
   }
   serialize (instance) {

@@ -1,11 +1,10 @@
 import mongoose, { Schema } from 'mongoose';
 
-let schemas = {}
-  , models = {};
+let models = {};
 
 export default (name, props = {}, statics = {}, methods = {}) => {
-  if (!schemas[name]) {
-    schemas[name] = new Schema({
+  if (!models[name]) {
+    const schema = new Schema({
       ...props,
       time_created: {
         type: Date,
@@ -27,15 +26,13 @@ export default (name, props = {}, statics = {}, methods = {}) => {
         required: true
       }
     });
-    schemas[name].statics = statics;
-    schemas[name].methods = methods;
-  }
-  if (!models[name]) {
-    models[name] = mongoose.model(name, schemas[name]);
+    schema.statics = statics;
+    schema.methods = methods;
+    models[name] = mongoose.model(name, schema);
   }
 
   return {
-    schema: schemas[name],
-    model: models[name]
+    model: models[name],
+    connected: true
   };
 };

@@ -1,6 +1,6 @@
 mutation loginUser($user: LoginUserInput!){
   user: loginUser(user: $user) {
-  	_id
+  	id
     name
     email
     time_updated,

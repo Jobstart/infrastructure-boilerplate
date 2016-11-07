@@ -13,7 +13,7 @@ import style from 'components/usersTable/index.css';
 const SUBSCRIPTION_QUERY = gql`
   subscription onUpdateUser($query: UpdateUserSubscriptionQuery!){
     updateUser(query: $query){
-      _id
+      id
       ...UserRow
     }
   }
@@ -22,16 +22,16 @@ const SUBSCRIPTION_QUERY = gql`
 @graphql(gql`
   query Users ($query: UsersQuery!){
     users: getUsersByID (query: $query) {
-      _id
+      id
       ...UserRow
     }
   }
 `, {
-  options: ({ location: { query: { userIds = '580b14d41e276e5c43570430' } } } ) => ({
+  options: ({ location: { query: { userIds = '1' } } }) => ({
     fragments: UserRow.fragments.entry.fragments(),
     variables: {
       query: {
-        _ids: userIds.replace(/\s/g, '').split(',')
+        ids: userIds.replace(/\D/g, '').split(',').map((n) => parseInt(n))
       }
     }
   }),
@@ -60,7 +60,7 @@ export default class UsersTable extends PureComponent {
         fragments: UserRow.fragments.entry.fragments(),
         variables: {
           query: {
-            _id: '580b14d41e276e5c43570430'
+            id: 123
           }
         }
       }).subscribe({

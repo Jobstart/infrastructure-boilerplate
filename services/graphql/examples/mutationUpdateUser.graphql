@@ -1,6 +1,6 @@
 mutation updateUser($user: UpdateUserInput!){
   user: updateUser(user: $user) {
-  	_id
+  	id
     name
     email
     time_updated
@@ -10,7 +10,7 @@ mutation updateUser($user: UpdateUserInput!){
 # QUERY PARAMS
 # {
 #   "user": {
-#   	"_id": "580b14d41e276e5c43570430",
+#   	"id": 1,
 #     "name": "Andrew"
 #   }
 # }

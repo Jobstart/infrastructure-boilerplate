@@ -30,7 +30,7 @@ const onSubscribe = async (msg, params, req) => {
     ...params,
     context: {
       user,
-      connectors: getConnectors(user)
+      connectors: await getConnectors(user)
     }
   };
 };

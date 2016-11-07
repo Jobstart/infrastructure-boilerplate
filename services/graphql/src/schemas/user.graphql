@@ -1,7 +1,7 @@
 # The User type is used to model a User object
 type User {
   # The primary key for the user object (required)
-  _id: ObjectId!
+  id: Int!
   # The user's name
   name: String
   # The user's email address
@@ -39,7 +39,7 @@ input LoginUserInput {
 # The UpdateUserINput type is used to modify a User object
 input UpdateUserInput {
   # ID [ObjectId] of User to update
-  _id: ObjectId
+  id: Int
   # The user's new name
   name: String
   # The user's new email
@@ -49,17 +49,17 @@ input UpdateUserInput {
 # The UserQuery type is used to find a User object.
 input UserQuery {
   # The _id [ObjectId] property of a User object
-  _id: ObjectId!
+  id: Int!
 }
 
 # The UsersQuery type is used to find a list of User objects
 input UsersQuery {
   # A list of _id [ObjectId] properties of list of User objects
-  _ids: [ObjectId]!
+  ids: [Int]!
 }
 
 # The UpdateUserSubscriptionQuery type is used to subscribe to a user update
 input UpdateUserSubscriptionQuery {
   # The _id [ObjectId] property of a User object to subscribe to for updates
-  _id: ObjectId!
+  id: Int!
 }

@@ -1,35 +1,48 @@
-import { MongooseConnector, mongooseModel } from 'adapters/mongoose';
+//import { MongooseConnector, mongooseModel } from 'adapters/mongoose';
+import { SequelizeConnector, sequelizeModel, DataTypes } from 'adapters/sequelize';
 import { makeSaltedHash, compareSaltedHash, objectToToken } from 'lib/crypto';
 
-const { model: User } = mongooseModel('User', {
-  name: String,
-  email: String,
-  hashed_password: String
+const { model: User, connected } = sequelizeModel('User', {
+  name: DataTypes.STRING,
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+    validate: {
+      isEmail: true
+    }
+  },
+  hashed_password: DataTypes.STRING
 });
 
-class UserConnector extends MongooseConnector {
-  constructor () {
-    super(User, null);
+export {
+  connected
+};
+
+export default class UserConnector extends SequelizeConnector {
+  constructor (reqUser) {
+    super(User, reqUser);
   }
   async getByEmail (email) {
     const user = await this.model.findOne({
-      email
+      where: {
+        email
+      }
     });
     if (user) {
       await this.loader.prime(user);
     }
     return user;
   }
-  async signup ({ name, email, password }) {
+  async signup ({ name, email, password }, transaction) {
     const hashed_password = await makeSaltedHash(password);
     const user = await super.create({
       name,
       email,
       hashed_password
-    });
+    }, transaction);
 
     const token = await objectToToken({
-      _id: user._id.toString()
+      id: user.id.toString()
     });
 
     return {
@@ -51,7 +64,7 @@ class UserConnector extends MongooseConnector {
     }
 
     const token = await objectToToken({
-      _id: user._id.toString()
+      id: user.id.toString()
     });
 
     return {
@@ -60,5 +73,3 @@ class UserConnector extends MongooseConnector {
     };
   }
 }
-
-export default UserConnector;

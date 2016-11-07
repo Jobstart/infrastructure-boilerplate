@@ -1,8 +1,17 @@
-import UserConnector from 'connectors/user';
+import Promise from 'bluebird';
+import UserConnector, { connected as userModelConnected} from 'connectors/user';
 
-const getConnectors = user => ({
-  User: new UserConnector(user)
-});
+const getConnectors = async (user) => {
+  await Promise.all([
+    userModelConnected
+  ]);
+
+  const User = new UserConnector(user);
+
+  return {
+    User
+  };
+};
 
 export default getConnectors;
 
