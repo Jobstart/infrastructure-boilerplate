@@ -84,10 +84,12 @@ const config = {
     modulesDirectories: [
       'src',
       'node_modules',
-      'dist',
-      '../../common'
+      'dist'
     ],
-    extensions: ['', '.json', '.js']
+    extensions: ['', '.json', '.js'],
+    alias: {
+      'graphql-service': '../../../graphql/src'
+    }
   },
   node: {
     __dirname: true

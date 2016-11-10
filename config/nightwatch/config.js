@@ -1,10 +1,10 @@
 require('babel-register');
 module.exports = {
-  "src_folders": ["qa/tests"],
+  "src_folders": ["test/e2e/tests"],
   "output_folder": "reports",
   "custom_commands_path": "",
   "custom_assertions_path": "",
-  "page_objects_path": "qa/pages",
+  "page_objects_path": "test/e2e/pages",
   "globals_path": "config/nightwatch/globals",
   "selenium": {
     "start_process": true,

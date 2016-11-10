@@ -180,27 +180,25 @@ export default class Html extends Component {
     );
   }
   render () {
+    const ROOT_ID = 'root';
     const js = `
       window.cfg = {
         GRAPHQL_FQDN: ${JSON.stringify(GRAPHQL_FQDN)},
         WS_FQDN: ${JSON.stringify(WS_FQDN)},
-        ASSETS_FQDN: ${JSON.stringify(ASSETS_FQDN)}
+        ASSETS_FQDN: ${JSON.stringify(ASSETS_FQDN)},
+        INITIAL_STATE: ${JSON.stringify(this.props.state)},
+        ROOT_ID: ${JSON.stringify(ROOT_ID)}
       };
-      window.__INITIAL_STATE__=${JSON.stringify(this.props.state)}
     `;
 
-    console.log('production?', __PRODUCTION__);
-
     const assetRoot = `${ASSETS_FQDN}${__PRODUCTION__ ? '/' + __BUILD_STAMP__ : '' }`;
-
-    console.log('assetRoot', assetRoot);
 
     return (
       <html
         lang={this.props.lang}>
         {this._renderHead()}
         <body>
-          <div id="root" dangerouslySetInnerHTML={{ __html: this.props.content }} />
+          <div id={ROOT_ID} dangerouslySetInnerHTML={{ __html: this.props.content }} />
           <script dangerouslySetInnerHTML={{ __html: js}}></script>
           <script src={`${assetRoot}/vendor.js`}></script>
           <script src={`${assetRoot}/client.js`}></script>

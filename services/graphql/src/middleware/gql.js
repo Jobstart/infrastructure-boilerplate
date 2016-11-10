@@ -1,4 +1,5 @@
 import { graphqlExpress } from 'graphql-server-express';
+import _ from 'underscore';
 import logger from 'io/logger';
 
 import schema from 'schema';
@@ -8,11 +9,11 @@ const middleware = graphqlExpress(async (req) => ({
   schema,
   context: {
     user: req.user || null,
-    connectors: await getConnectors(req.user),
+    connectors: await getConnectors(req.user)
   },
   formatError: (err) => {
-    logger.trace(err);
-    return err;
+    if (!_.isFunction(err.serialize)) return err;
+    return err.serialize();
   }
 }));
 

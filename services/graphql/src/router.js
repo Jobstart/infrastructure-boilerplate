@@ -16,25 +16,18 @@ if (__PRODUCTION__) {
   }));
 }
 
-router.use((req, res, next) => {
-  logger.log('incoming request', req.url);
+const logMiddleware = (req, res, next) => {
+  logger.log('handling graphql request');
   next();
-});
+};
 
 router.use('/graphql',
   cookieParser(),
   authMiddleware,
   bodyParser.json(),
+  logMiddleware,
   gqlMiddleware
 );
-
-router.use((err, req, res, next) => {
-  logger.trace(err);
-  return res.status(500).send({
-    error: 'unknown',
-    message: 'An unknown error has occured'
-  });
-});
 
 if (__DEV__) {
   logger.log('GraphiQL UI enabled');

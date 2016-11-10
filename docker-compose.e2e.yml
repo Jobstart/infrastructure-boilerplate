@@ -39,10 +39,10 @@ client:
   ports:
     - "$CLIENT_SERVER_PORT:$CLIENT_SERVER_PORT"
   links:
-    - api:api
+    - graphql:graphql
   environment:
     - NODE_ENV=production
     - PORT=$CLIENT_SERVER_PORT
     - GRAPHQL_FQDN=http://graphql:$GRAPHQL_SERVER_PORT
-  - BROWSER_GRAPHQL_FQDN=http://localhost:$GRAPHL_SERVER_PORT
+    - BROWSER_GRAPHQL_FQDN=http://localhost:$GRAPHQL_SERVER_PORT
     - ASSETS_FQDN=https://assets.jobstart.com

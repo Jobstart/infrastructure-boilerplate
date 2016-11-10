@@ -67,7 +67,6 @@ dependencies: .FORCE
 
 containers-up: .FORCE
 	docker-compose up -d
-	sleep 10
 
 containers-down: .FORCE
 	docker-compose stop
@@ -81,13 +80,16 @@ seed: .FORCE
 		"make -C services/graphql seed"
 
 test: .FORCE
-	concurrently \
-		"make -C services/client test" \
-		"make -C services/graphql test" \
-		"make test-e2e"
+	make test-integration
+	make test-e2e
+
+test-integration: .FORCE
+	make containers-up
+	make -C services/client test
+	make -C services/graphql test
 
 test-e2e: .FORCE
-	docker-compose -f docker-compose.test.yml up -d
+	docker-compose -f docker-compose.e2e.yml up -d
 	sleep 10
 	nightwatch -c config/nightwatch/config.js
 

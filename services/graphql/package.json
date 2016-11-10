@@ -36,6 +36,7 @@
     "cors": "^2.8.1",
     "dataloader": "^1.2.0",
     "deepmerge": "^1.2.0",
+    "es6-error": "^4.0.0",
     "express": "^4.14.0",
     "graphql": "^0.7.2",
     "graphql-redis-subscriptions": "^1.1.3",

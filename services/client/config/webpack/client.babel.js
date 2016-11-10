@@ -99,10 +99,12 @@ const config = {
     modulesDirectories: [
       'src',
       'dist',
-      'node_modules',
-      '../../common'
+      'node_modules'
     ],
-    extensions: ['', '.json', '.js']
+    extensions: ['', '.json', '.js'],
+    alias: {
+      'graphql-service': '../../../graphql/src'
+    }
   },
   postcss: postCssPlugins
 };

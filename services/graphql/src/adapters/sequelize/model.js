@@ -21,6 +21,11 @@ export default (name, attributes = {}, options = {}) => {
         type: DataTypes.DATE,
         defaultValue: null,
         allowNull: true
+      },
+      destroyed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false
       }
     }, options);
   }

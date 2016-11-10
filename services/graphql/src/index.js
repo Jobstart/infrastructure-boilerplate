@@ -17,7 +17,8 @@ import connectSubscriptions from 'io/subscription';
 
 let r = router;
 
-process.on('unhandledRejection', (err) => console.trace(err));
+process.on('uncaughtException', (err) => logger.trace('UncaughtException', err));
+process.on('uncaughtRejection', (err) => logger.trace('UncaughtRejection', err));
 
 if (__DEV__) {
   if (module.hot) {

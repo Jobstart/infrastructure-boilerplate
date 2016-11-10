@@ -1,11 +1,12 @@
 import React from 'react';
 import Promise from 'bluebird';
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { renderToStringWithData } from 'react-apollo/server';
 import { match, RouterContext, createMemoryHistory} from 'react-router';
 import ReactDOMServer from 'react-dom/server';
 
+import getStore from 'store';
+import logger from 'io/logger';
 import routesFactory from 'routes';
 import Html from 'components/common/html';
 
@@ -36,24 +37,15 @@ export default async function render (req, res, next) {
       return res.redirect(redirectLocation.pathname + redirectLocation.search);
     }
 
-    const client = new ApolloClient({
-      ssrMode: true,
-      dataIdFromObject: (inst) => {
-        return inst._id || inst.id;
-      },
-      networkInterface: createNetworkInterface({
-        uri: `${GRAPHQL_FQDN}/graphql`,
-        credentials: 'same-origin',
-        headers: req.headers
-      })
+    const { store, apolloClient: client } = getStore(req, {
+      GRAPHQL_FQDN
     });
 
     const root = (
-      <ApolloProvider client={client}>
+      <ApolloProvider store={store} client={client}>
         <RouterContext {...renderProps} />
       </ApolloProvider>
     );
-
 
     const { markup: content, initialState } = await renderToStringWithData(root);
 
@@ -63,7 +55,7 @@ export default async function render (req, res, next) {
 
     res.status(200).send(markup);
   } catch (e) {
-    console.trace(e);
+    logger.trace(e);
     next(e);
   }
 }
