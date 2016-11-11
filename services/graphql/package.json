@@ -27,7 +27,7 @@
     "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
-    "apollo-errors": "^1.0.1",
+    "apollo-errors": "1.0.2",
     "babel-polyfill": "^6.16.0",
     "bcrypt": "^0.8.7",
     "bluebird": "^3.4.6",

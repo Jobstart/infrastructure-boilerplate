@@ -99,9 +99,9 @@ ap@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/ap/-/ap-0.2.0.tgz#ae0942600b29912f0d2b14ec60c45e8f330b6110"
 
-apollo-errors:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/apollo-errors/-/apollo-errors-1.0.1.tgz#70e47c0bf58b2ae9224259e090d0d0f82208e0c8"
+apollo-errors@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/apollo-errors/-/apollo-errors-1.0.2.tgz#522b68c5982850386ab16e34de5b3bd7a3113869"
   dependencies:
     es6-error "^4.0.0"
 
