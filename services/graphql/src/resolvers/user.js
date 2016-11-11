@@ -1,6 +1,7 @@
 import pubsub from 'io/pubsub';
 import * as SequelizeErrors from 'errors/adapters/sequelize';
 import { sequelizeBaseResolver } from 'resolvers/base';
+import { UnknownError } from 'errors/custom';
 
 const getUsersByID = sequelizeBaseResolver.createResolver(
   async (root, { query: { ids } }, { connectors: { User }} ) => {

@@ -99,6 +99,12 @@ ap@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/ap/-/ap-0.2.0.tgz#ae0942600b29912f0d2b14ec60c45e8f330b6110"
 
+apollo-errors:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/apollo-errors/-/apollo-errors-1.0.1.tgz#70e47c0bf58b2ae9224259e090d0d0f82208e0c8"
+  dependencies:
+    es6-error "^4.0.0"
+
 aproba@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.0.4.tgz#2713680775e7614c8ba186c065d4e2e52d1072c0"
@@ -1383,7 +1389,7 @@ es5-ext@^0.10.7, es5-ext@^0.10.8, es5-ext@~0.10.11, es5-ext@~0.10.2, es5-ext@~0.
     es6-iterator "2"
     es6-symbol "~3.1"
 
-es6-error:
+es6-error, es6-error@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/es6-error/-/es6-error-4.0.0.tgz#f094c7041f662599bb12720da059d6b9c7ff0f40"
 

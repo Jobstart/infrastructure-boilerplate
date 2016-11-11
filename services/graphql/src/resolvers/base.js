@@ -2,7 +2,7 @@ import createResolver from 'lib/createResolver';
 import logger from 'io/logger';
 
 import * as SequelizeErrors from 'errors/adapters/sequelize';
-import UnknownError from 'errors/isomorphic/generic/unknown';
+import UnknownError from 'errors/custom';
 
 export const sequelizeBaseResolver = createResolver(
   null,
@@ -19,8 +19,6 @@ export const sequelizeBaseResolver = createResolver(
       InvalidConnectionError,
       ConnectionTimedOutError
     } = SequelizeErrors;
-
-    logger.trace('Handling base error', error);
 
     switch(error.constructor) {
       case DatabaseError: return UnknownError(DatabaseError);

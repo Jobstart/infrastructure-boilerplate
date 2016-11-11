@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'underscore';
 import withStyles from 'isomorph-style-loader/lib/withStyles';
 import { withApollo } from 'react-apollo';
 import { graphql } from 'react-apollo';
@@ -35,9 +36,31 @@ const SUBSCRIPTION_QUERY = gql`
       }
     }
   }),
-  props: (props) => {
-    const { loading, users = []} = props.data;
-    return { loading, users };
+  props: ({ data: { loading, users = [], fetchMore } }) => {
+    return {
+      loading,
+      users,
+      loadMoreUsers (userIds = '') {
+        const ids = userIds.replace(/\D/g, '').split(',').map((n) => parseInt(n));
+        return fetchMore({
+          fragments: UserRow.fragments.entry.fragments(),
+          variables: {
+            query: {
+              ids: ids
+            }
+          },
+          updateQuery: (previousResult, response) => {
+            return {
+              ...previousResult,
+              users: _.uniq([
+                ...previousResult.users,
+                ...((response.fetchMoreResult.data || {}).users || [])
+              ], (user) => user.id)
+            };
+          }
+        });
+      }
+    };
   }
 })
 @withStyles(style)
@@ -55,6 +78,7 @@ export default class UsersTable extends PureComponent {
   }
   componentDidMount () {
     if (__CLIENT__) {
+      this.props.loadMoreUsers('0');
       this.subscription = this.props.client.subscribe({
         query: SUBSCRIPTION_QUERY,
         fragments: UserRow.fragments.entry.fragments(),

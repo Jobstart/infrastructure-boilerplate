@@ -66,7 +66,7 @@ dependencies: .FORCE
 		"make -C services/graphql dependencies"
 
 containers-up: .FORCE
-	docker-compose up -d
+	docker-compose up -d --remove-orphans
 
 containers-down: .FORCE
 	docker-compose stop
