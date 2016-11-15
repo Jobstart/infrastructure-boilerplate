@@ -24,7 +24,7 @@ const globals = {
 };
 
 const devServer = {
-  publicPath: envr.ASSETS_FQDN,
+  publicPath: envr.ASSETS_FQDN + '/',
   hot: true,
   inline: false,
   lazy: false,

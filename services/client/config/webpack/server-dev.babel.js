@@ -26,7 +26,7 @@ const config = {
   ],
   output: {
     ...base.output,
-    publicPath: `http://${envr.HOSTNAME}:${envr.WEBPACK_PORT}`
+    publicPath: `${envr.ASSETS_FQDN}/`
   },
   plugins: [
     new webpack.DefinePlugin(globals),
