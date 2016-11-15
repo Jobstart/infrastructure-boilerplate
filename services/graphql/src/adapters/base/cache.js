@@ -1,5 +1,5 @@
 import { redisConnection as redis } from 'io';
-import logger from 'io/logger';
+import { trace } from 'io/logger';
 
 let hasInitialCleared = false;
 
@@ -47,7 +47,7 @@ export default class Cache {
     try {
       instance = await redis.getAsync(this._name, this._keyStr(key))
     } catch (err) {
-      logger.trace('redis error', err);
+      trace('redis error', err);
       this._purgeQueue.push(key);
     }
     return instance;
@@ -58,7 +58,7 @@ export default class Cache {
       instances = (await redis.mgetAsync(keys.map((key) => this._keyStr(key))))
       .map((instance) => instance ? this.deserialize(instance) : null);
     } catch (err) {
-      logger.trace('redis error', err);
+      trace('redis error', err);
       purgeQueue = purgeQueue.concat(keys.map((key) => this._keyStr(key)));
     }
     return instances;
@@ -70,7 +70,7 @@ export default class Cache {
         .expire(this._keyStr(instance[this._key]), this._ttl)
         .execAsync();
     } catch (e) {
-      logger.trace('redis error', err);
+      trace('redis error', err);
       purgeQueue.push(this._keyStr(instance[this._key]));
       return false;
     }
@@ -86,7 +86,7 @@ export default class Cache {
       .execAsync();
       return true;
     } catch (e) {
-      logger.trace('redis error', err);
+      trace('redis error', err);
       purgeQueue = purgeQueue.concat(instances.map((instance) => this._keyStr(instance[this._key])));
       return false;
     }
@@ -98,7 +98,7 @@ export default class Cache {
       );
       return true;
     } catch (e) {
-      logger.trace('redis error', err);
+      trace('redis error', err);
       purgeQueue.push(this._keyStr(instance[this._key]));
       return false;
     }
@@ -113,7 +113,7 @@ export default class Cache {
       .execAsync();
       return true;
     } catch (e) {
-      logger.trace('redis error', err);
+      trace('redis error', err);
       purgeQueue = purgeQueue.concat(instances.map((instance) => this._keyStr(instance[this._key])));
       return false
     }

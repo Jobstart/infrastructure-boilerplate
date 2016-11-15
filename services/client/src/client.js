@@ -4,6 +4,7 @@ import { ApolloProvider } from 'react-apollo';
 import routesFactory from 'routes';
 import { Router, match, browserHistory as history } from 'react-router';
 import getStore from 'store';
+import { log } from 'io/logger';
 
 const { GRAPHQL_FQDN, WS_FQDN, ASSETS_FQDN, INITIAL_STATE, ROOT_ID } = window.cfg;
 
@@ -22,5 +23,5 @@ match({ history, routes}, (err, redirectLocation, renderProps) => {
     <ApolloProvider store={store} client={client}>
       <Router {...renderProps}/>
     </ApolloProvider>
-  ), document.getElementById(ROOT_ID));
+  ), document.getElementById(ROOT_ID), () => log('initial render complete'));
 });

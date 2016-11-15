@@ -6,7 +6,7 @@ import { Z_BEST_COMPRESSION } from 'zlib';
 import { graphiqlExpress } from 'graphql-server-express';
 
 import { authMiddleware, gqlMiddleware } from 'middleware';
-import { logger } from 'io'
+import { log } from 'io/logger'
 
 const router = Router();
 
@@ -17,7 +17,7 @@ if (__PRODUCTION__) {
 }
 
 const logMiddleware = (req, res, next) => {
-  logger.log('handling graphql request');
+  log('handling graphql request');
   next();
 };
 
@@ -30,7 +30,7 @@ router.use('/graphql',
 );
 
 if (__DEV__) {
-  logger.log('GraphiQL UI enabled');
+  log('GraphiQL UI enabled');
   router.use('/graphiql', graphiqlExpress({
     endpointURL: '/graphql',
   }));

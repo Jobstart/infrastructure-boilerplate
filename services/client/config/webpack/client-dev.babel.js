@@ -16,7 +16,11 @@ const globals = {
   __CLIENT__: true,
   __SERVER__: false,
   __PRODUCTION__: false,
-  __DEV__: true
+  __DEV__: true,
+  'process.env': {
+    NODE_ENV: JSON.stringify('development'),
+    DEBUG: JSON.stringify('client:*')
+  }
 };
 
 const devServer = {

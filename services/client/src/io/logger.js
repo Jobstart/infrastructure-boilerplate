@@ -1,16 +1,13 @@
-function log () {
-  console.log.apply(console, arguments);
-}
+import debug from 'debug';
 
-function warn () {
-  console.warn.apply(console, arguments);
-}
+const log = debug('client:log');
+const warn = debug('client:warn');
 
 function trace () {
   console.trace.apply(console, arguments);
 }
 
-export default {
+export {
   log,
   warn,
   trace

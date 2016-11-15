@@ -1,11 +1,12 @@
 import Promise from 'bluebird';
 
 import {
-  logger,
   ioConnectedPromise,
   app,
   server as httpServer
 } from 'io';
+
+import { trace, log } from 'io/logger';
 
 import {
   HOSTNAME,
@@ -17,12 +18,12 @@ import connectSubscriptions from 'io/subscription';
 
 let r = router;
 
-process.on('uncaughtException', (err) => logger.trace('UncaughtException', err));
-process.on('uncaughtRejection', (err) => logger.trace('UncaughtRejection', err));
+process.on('uncaughtException', (err) => trace('UncaughtException', err));
+process.on('uncaughtRejection', (err) => trace('UncaughtRejection', err));
 
 if (__DEV__) {
   if (module.hot) {
-    logger.log('[HMR] Waiting for server-side updates');
+    log('[HMR] Waiting for server-side updates');
 
     module.hot.accept('router', () => {
       r = require('router').default;
@@ -44,11 +45,11 @@ async function main () {
 
     connectSubscriptions(httpServer);
 
-    logger.log(`GraphQL listening on ${HOSTNAME}:${PORT}`);
+    log(`GraphQL listening on ${HOSTNAME}:${PORT}`);
 
 
   } catch (e) {
-    logger.trace(e);
+    trace(e);
     process.exit(1);
   }
 }

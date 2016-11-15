@@ -6,7 +6,7 @@ import { match, RouterContext, createMemoryHistory} from 'react-router';
 import ReactDOMServer from 'react-dom/server';
 
 import getStore from 'store';
-import logger from 'io/logger';
+import { trace } from 'io/logger';
 import routesFactory from 'routes';
 import Html from 'components/common/html';
 
@@ -55,7 +55,7 @@ export default async function render (req, res, next) {
 
     res.status(200).send(markup);
   } catch (e) {
-    logger.trace(e);
+    trace(e);
     next(e);
   }
 }
