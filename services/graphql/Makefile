@@ -23,10 +23,14 @@ lint: .FORCE
 dependencies: .FORCE
 	yarn
 
+start-server: .FORCE
+	just-wait --pattern 'dist/*.js'
+	node dist/index
+
 watch: .FORCE
 	concurrently \
 		"webpack --watch --verbose --colors --display-error-details --config config/webpack/server-dev.babel.js" \
-		"just-wait --pattern 'dist/*.js' && node dist/index"
+		"make start-server"
 
 package: .FORCE
 	docker build -t $(DOCKER_ACCOUNT)/$(DOCKER_REPO):$(DOCKER_TAG) .
